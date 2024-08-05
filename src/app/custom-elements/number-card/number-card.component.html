@@ -1,0 +1,20 @@
+<div
+  [style]="settings.style"
+  class="number-card-container p-6 rounded-xl w-52 bg-tertiary-200"
+  [ngClass]="settings.className"
+>
+  <h3 class="text-sm font-medium">{{ title }}</h3>
+  <div class="flex items-center justify-between mt-4">
+    <h2 class="text-2xl font-semibold">{{ displayValue }}</h2>
+    <div class="flex items-center gap-1 font-normal text-xs">
+      <p class="">{{ displayGrowth }}</p>
+      <mat-icon
+        style="height: 1rem; width: 1rem"
+        class="text-xs"
+        [class.rotate-180]="growth < 0"
+        fontSet="material-symbols-outlined"
+        >moving</mat-icon
+      >
+    </div>
+  </div>
+</div>

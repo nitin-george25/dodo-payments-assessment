@@ -1,0 +1,27 @@
+.datatable-container {
+  ::ng-deep .mat-mdc-header-cell {
+    border: none;
+  }
+
+  ::ng-deep .mat-mdc-cell {
+    border: none;
+  }
+
+  ::ng-deep .mat-mdc-table {
+    padding-left: 1em;
+    background-color: transparent;
+  }
+
+  ::ng-deep .mat-mdc-paginator-page-size {
+    display: none;
+  }
+
+  ::ng-deep .mat-mdc-paginator-container,
+  .mat-mdc-paginator {
+    background: transparent;
+  }
+}
+
+::ng-deep .mat-mdc-menu-panel {
+  background-color: #f5f8f7;
+}

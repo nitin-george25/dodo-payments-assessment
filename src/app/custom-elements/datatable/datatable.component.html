@@ -1,0 +1,141 @@
+<div class="datatable-container rounded-2xl overflow-hidden bg-base-300">
+  <div class="toolbar flex gap-12 items-center px-4 pt-4">
+    <h4 class="text-lg font-bold">{{ title }}</h4>
+    <div class="filter-container flex gap-4 relative">
+      <button
+        class="text-sm bg-chalk-100 py-1 px-4 rounded-lg"
+        (click)="openFilter()"
+      >
+        + Filter
+      </button>
+
+      @if (isFilterOpen) {
+      <div
+        class="table-filter flex gap-4 items-end absolute top-8 z-50 min-w-fit bg-tertiary-200 p-4 rounded-lg"
+      >
+        <mat-icon
+          class="text-chalk-400 text-sm right-0 top-1 absolute cursor-pointer"
+          (click)="closeFilter()"
+          >close</mat-icon
+        >
+        <div>
+          <label nz-label class="text-chalk-400 text-sm">Filter by</label>
+          <nz-select
+            class="select w-32"
+            [(ngModel)]="filterKey"
+            (ngModelChange)="headerSelect($event)"
+          >
+            @for (header of headers; track header) {
+            <nz-option
+              [nzValue]="header.key"
+              [nzLabel]="header.label"
+            ></nz-option>
+            }
+          </nz-select>
+        </div>
+
+        @if (filterKey) { @if (filterType === 'date') {
+        <div>
+          <label nz-label class="text-chalk-400 text-sm">Date</label>
+          <nz-range-picker
+            class="w-44"
+            [(ngModel)]="filterDateValue"
+          ></nz-range-picker>
+        </div>
+        } @else {
+        <div>
+          <label nz-label class="text-chalk-400 text-sm">Value</label>
+          <input
+            nz-input
+            class="input w-32"
+            [(ngModel)]="filterValue"
+            placeholder="Filter value"
+          />
+        </div>
+        } } @if (filterKey && (filterValue || filterDateValue)) {
+        <button
+          nz-button
+          class="text-sm bg-chalk-100 py-1 px-4 rounded-lg"
+          (click)="applyFilter(filterKey, filterValue, filterDateValue)"
+        >
+          Apply
+        </button>
+        }
+      </div>
+      } @for (filter of appliedFilters; track filter;) {
+      <nz-tag
+        class="flex items-center"
+        nzMode="closeable"
+        (nzOnClose)="removeFilter($index)"
+        >{{ getLabelFromKey(filter.key) }} :
+        {{ formatValue(filter.key, filter.value) }}</nz-tag
+      >
+      }
+    </div>
+  </div>
+
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="datatable mat-table w-full"
+    matSort
+  >
+    <ng-container *ngFor="let column of headers" [matColumnDef]="column.key">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        class="t-head px-4 py-2 text-chalk-400"
+      >
+        {{ column.label }}
+      </th>
+      @switch (column.type) { @case ('status') {
+      <td mat-cell *matCellDef="let element" class="px-4 py-2">
+        @let $value = element[column.key];
+        <div
+          class="flex gap-1 items-center w-fit px-2 py-1 rounded-2xl"
+          [ngClass]="{
+            'bg-green-100': $value === 'completed',
+            'bg-yellow-100': $value === 'pending',
+            'bg-red-100': $value === 'failed'
+          }"
+        >
+          <span
+            class="w-2 h-2 rounded-full"
+            [ngClass]="{
+              'bg-green-600': $value === 'completed',
+              'bg-yellow-400': $value === 'pending',
+              'bg-red-500': $value === 'failed'
+            }"
+          ></span>
+          <span class="status capitalize text-xs font-light">{{ $value }}</span>
+        </div>
+      </td>
+      } @case ('date') {
+      <td mat-cell *matCellDef="let element" class="px-4 py-2 font-light">
+        @let $value = element[column.key];
+        {{ $value | date : "dd MMM YYYY" }}
+      </td>
+      } @case ('currency') {
+      <td mat-cell *matCellDef="let element" class="px-4 py-2 font-light">
+        @let $value = element[column.key];
+        {{ $value | currency }}
+      </td>
+      } @default {
+      <td mat-cell *matCellDef="let element" class="px-4 py-2 font-light">
+        @let $value = element[column.key];
+        {{ $value }}
+      </td>
+      } }
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[10]"
+    showFirstLastButtons
+    aria-label="Select page of data"
+  ></mat-paginator>
+</div>

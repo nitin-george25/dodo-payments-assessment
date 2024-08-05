@@ -1,0 +1,13 @@
+<div class="chart-container" [ngClass]="settings.className">
+  <ngx-charts-line-chart
+    [view]="[400, 300]"
+    [scheme]="settings.colorScheme || 'default'"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [showGridLines]="false"
+    [results]="chartData"
+  >
+  </ngx-charts-line-chart>
+</div>

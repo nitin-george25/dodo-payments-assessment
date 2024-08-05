@@ -1,0 +1,57 @@
+<nav
+  class="top-bar h-16 border-b border-divider-300 flex items-center justify-between px-8"
+>
+  <div class="flex gap-4 items-center">
+    <mat-icon
+      style="height: fit-content; width: auto; font-size: 1.5em; line-height: 1"
+      fontSet="material-symbols-outlined"
+      >{{ currentPage.icon ?? "error" }}</mat-icon
+    >
+    <mat-icon
+      style="height: fit-content; width: auto; font-size: 1.4em; line-height: 1"
+      fontSet="material-symbols-outlined"
+      >star</mat-icon
+    >
+    <p class="text-chalk-400 text-sm">Pages</p>
+    <span class="text-chalk-400 text-sm">/</span>
+    <p class="text-sm">{{ currentPage.label }}</p>
+  </div>
+  <div class="flex gap-2">
+    <div
+      class="searchbar-container flex items-center w-36 bg-chalk-100 px-2 rounded-md mr-2"
+    >
+      <mat-icon
+        class="text-chalk-400 text-lg leading-6"
+        fontSet="material-symbols-outlined"
+        >search</mat-icon
+      >
+      <input
+        #inputElement
+        type="text"
+        class="searchbar-input text-sm bg-transparent placeholder:text-sm flex-1 w-20 outline-none"
+        placeholder="Search"
+      />
+      <span class="text-chalk-400 text-sm">&#8984;/</span>
+    </div>
+    <mat-icon
+      class="text-lg text-center leading-6"
+      fontSet="material-symbols-outlined"
+      >light_mode</mat-icon
+    >
+    <mat-icon
+      class="text-lg text-center leading-6"
+      fontSet="material-symbols-outlined"
+      >history</mat-icon
+    >
+    <mat-icon
+      class="text-lg text-center leading-6"
+      fontSet="material-symbols-outlined"
+      >notifications</mat-icon
+    >
+    <mat-icon
+      class="text-lg text-center leading-6"
+      fontSet="material-symbols-outlined"
+      >dock_to_right</mat-icon
+    >
+  </div>
+</nav>

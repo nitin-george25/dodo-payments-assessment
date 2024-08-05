@@ -1,0 +1,59 @@
+<div class="overivew-container h-full w-full">
+  <button
+    mat-button
+    [matMenuTriggerFor]="menu"
+    class="flex items-center text-black mb-2"
+  >
+    <mat-icon class="text-sm content-center" fontSet="material-icons-outlined"
+      >keyboard_arrow_down</mat-icon
+    >Today
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>This Week</button>
+    <button mat-menu-item>This Month</button>
+  </mat-menu>
+  <div class="stat-card-list flex gap-4">
+    @let cardSettings = { className: "bg-sky-300" };
+    <app-number-card
+      title="Revenue"
+      [value]="24000000"
+      [growth]="10"
+    ></app-number-card>
+    <app-number-card
+      [settings]="cardSettings"
+      title="Transactions"
+      [value]="14000"
+      [growth]="-0.03"
+    ></app-number-card>
+    <app-number-card
+      title="Average Transaction"
+      [value]="2000"
+      [growth]="7"
+    ></app-number-card>
+    <app-number-card
+      [settings]="cardSettings"
+      title="Refunds"
+      [value]="1000"
+      [growth]="10"
+    ></app-number-card>
+  </div>
+  <div class="line-charts flex gap-4 mt-6">
+    <app-chart
+      title="Revenue"
+      [data]="transactions"
+      [type]="'line'"
+      [mapping]="{ name: 'date', value: 'amount' }"
+      [settings]="{
+        className: 'bg-base-300',
+        colorScheme: chartsColorScheme
+      }"
+    ></app-chart>
+
+    <app-chart
+      title="Revenue"
+      [data]="transactions"
+      [type]="'line'"
+      [mapping]="{ name: 'date', value: 'amount' }"
+    ></app-chart>
+  </div>
+</div>

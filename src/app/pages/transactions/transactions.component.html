@@ -1,0 +1,9 @@
+<div class="transactions-page">
+  @if (data && data.length > 0) {
+  <app-datatable [data]="data" [headers]="headers" title="Transactions" />
+  } @if (!data) {
+  <div class="flex items-center justify-center h-full">
+    <mat-spinner diameter="32"></mat-spinner>
+  </div>
+  }
+</div>
