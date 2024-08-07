@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
 
-import { FormlyNgZorroAntdModule } from '@ngx-formly/ng-zorro-antd';
-
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
@@ -31,7 +29,6 @@ interface Notification {
   standalone: true,
   imports: [
     CommonModule,
-    FormlyNgZorroAntdModule,
     RouterModule,
     MatIconModule,
     MatSidenavModule,
