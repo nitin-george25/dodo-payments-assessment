@@ -68,7 +68,7 @@
         nzMode="closeable"
         (nzOnClose)="removeFilter($index)"
         >{{ getLabelFromKey(filter.key) }} :
-        {{ formatValue(filter.key, filter.value) }}</nz-tag
+        {{ table.formatValue(filter.key, filter.value) }}</nz-tag
       >
       }
     </div>
@@ -77,8 +77,8 @@
   <table
     mat-table
     [dataSource]="dataSource"
-    class="datatable mat-table w-full"
     matSort
+    class="datatable mat-table w-full"
   >
     <ng-container *ngFor="let column of headers" [matColumnDef]="column.key">
       <th

@@ -1,14 +1,16 @@
 <div class="bg-base-400 h-screen w-screen flex">
   <div class="sidenav w-60 relative p-4">
-    <div class="account flex items-center gap-2 mb-4">
-      <img
-        alt="profile photo"
-        class="rounded-full"
-        style="height: 20px; width: 20px"
-        src="/assets/images/avatar.png"
-      />
-      <p class="m-0 text-sm">Superstars AI</p>
-    </div>
+    <a routerLink="user-settings">
+      <div class="account flex items-center gap-2 mb-4">
+        <img
+          alt="profile photo"
+          class="rounded-full"
+          style="height: 20px; width: 20px"
+          src="/assets/images/avatar.png"
+        />
+        <p class="m-0 text-sm">Superstars AI</p>
+      </div>
+    </a>
     <h4 class="text-sm text-chalk-400 m-0 py-2">Pages</h4>
     <div class="flex flex-col gap-1">
       @for (item of navItems; track $index) {

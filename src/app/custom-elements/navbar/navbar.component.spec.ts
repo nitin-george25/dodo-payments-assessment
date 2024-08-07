@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { NavbarComponent } from './navbar.component';
-import { MatIconModule } from '@angular/material/icon';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatIconModule } from "@angular/material/icon";
+import { NavbarComponent } from "./navbar.component";
+import { ElementRef } from "@angular/core";
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -9,8 +9,7 @@ describe('NavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavbarComponent, MatIconModule],
-      declarations: [NavbarComponent],
+      imports: [NavbarComponent, MatIconModule], // Include standalone component and necessary modules
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarComponent);
@@ -23,8 +22,8 @@ describe('NavbarComponent', () => {
   });
 
   it('should focus the input element on Command/Ctrl + /', () => {
-    const inputElementRef = jasmine.createSpyObj('ElementRef', ['focus']);
-    component.inputElementRef = inputElementRef;
+    const focusSpy = jasmine.createSpy('focus');
+    component.inputElementRef = { nativeElement: { focus: focusSpy } } as ElementRef;
 
     const event = new KeyboardEvent('keydown', {
       key: '/',
@@ -32,24 +31,24 @@ describe('NavbarComponent', () => {
     });
 
     component.handleKeyboardEvent(event);
-    expect(inputElementRef.nativeElement.focus).toHaveBeenCalled();
+    expect(focusSpy).toHaveBeenCalled();
   });
 
   it('should blur the input element when Escape key is pressed', () => {
-    const inputElementRef = jasmine.createSpyObj('ElementRef', ['blur']);
-    component.inputElementRef = inputElementRef;
+    const blurSpy = jasmine.createSpy('blur');
+    component.inputElementRef = { nativeElement: { blur: blurSpy } } as ElementRef;
 
     const event = new KeyboardEvent('keydown', {
       key: 'Escape',
     });
 
     component.handleKeyboardEvent(event);
-    expect(inputElementRef.nativeElement.blur).toHaveBeenCalled();
+    expect(blurSpy).toHaveBeenCalled();
   });
 
   it('should not focus the input element on other key combinations', () => {
-    const inputElementRef = jasmine.createSpyObj('ElementRef', ['focus']);
-    component.inputElementRef = inputElementRef;
+    const focusSpy = jasmine.createSpy('focus');
+    component.inputElementRef = { nativeElement: { focus: focusSpy } } as ElementRef;
 
     const event = new KeyboardEvent('keydown', {
       key: 'A',
@@ -57,6 +56,6 @@ describe('NavbarComponent', () => {
     });
 
     component.handleKeyboardEvent(event);
-    expect(inputElementRef.nativeElement.focus).not.toHaveBeenCalled();
+    expect(focusSpy).not.toHaveBeenCalled();
   });
 });

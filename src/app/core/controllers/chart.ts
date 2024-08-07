@@ -6,7 +6,7 @@ export interface ChartMapping {
 
 export interface ChartDataItem {
   name: string;
-  value?: string;
+  value?: number;
   extra?: any;
   series?: ChartDataItem[];
 }
@@ -68,7 +68,7 @@ export class Chart {
     return processedData;
   }
 
-  processLineChartData(data: any, mapping: ChartMapping) {
+  processLineChartData(data: any, mapping?: ChartMapping) {
     if (!data || !mapping) {
       return data;
     }

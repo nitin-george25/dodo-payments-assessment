@@ -23,6 +23,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { TableHeader } from './types';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { MatIconModule } from '@angular/material/icon';
+import { Table } from '../../core/controllers/table';
 
 @Component({
   selector: 'app-datatable',
@@ -47,6 +48,8 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   @Input() title: string = '';
   @Input() data: any;
   @Input() headers: TableHeader[] = [];
+
+  table = new Table();
 
   formGroup = new FormGroup({});
   filterKey: string | undefined;
@@ -113,42 +116,15 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     this.isFilterOpen = false;
   }
 
-  filterData(): void {
-    let filteredData = this.data;
-
-    this.appliedFilters.forEach((filter) => {
-      console.log('filter by', filter, filteredData);
-      if (filter.key === 'date') {
-        const [start, end] = filter.value.split(',');
-        filteredData = filteredData.filter((row: any) => {
-          const date = new Date(row[filter.key]);
-          return date >= new Date(start) && date <= new Date(end);
-        });
-      } else {
-        filteredData = filteredData.filter((row: any) => {
-          return (
-            row[filter.key] &&
-            row[filter.key]
-              .toString()
-              .toLowerCase()
-              .includes(filter.value.toLowerCase())
-          );
-        });
-      }
-
-      this.filterKey = undefined;
-      this.filterValue = undefined;
-      this.filterDateValue = undefined;
-    });
-
-    this.dataSource.data = filteredData;
-
-    this.closeFilter();
-  }
-
   removeFilter(index: number): void {
     this.appliedFilters.splice(index, 1);
-    this.filterData();
+    this.table.filterData(this.data, this.appliedFilters);
+  }
+
+  resetFilterState = (): void => {
+    this.filterKey = undefined;
+    this.filterValue = undefined;
+    this.filterDateValue = undefined;
   }
 
   applyFilter(key?: string, value?: string, dateValue?: Date[]): void {
@@ -163,32 +139,12 @@ export class DatatableComponent implements OnInit, AfterViewInit {
       this.appliedFilters.push({ key, value: `${start},${end}` });
     }
 
-    this.filterData();
+    this.table.filterData(this.data, this.appliedFilters);
+    this.resetFilterState();
+    this.closeFilter();
   }
 
   getLabelFromKey(key: string): string {
     return this.headers.find((h) => h.key === key)?.label || '';
-  }
-
-  formatValue(key: string, value: string): string {
-    const header = this.headers.find((h) => h.key === key);
-    const type = header?.type;
-
-    if (type === 'date') {
-      const [start, end] = value.split(',');
-      console.log('start', start, 'end', end);
-
-      return `${new Date(start).toLocaleDateString('en-US', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-      })} - ${new Date(end).toLocaleDateString('en-US', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-      })}`;
-    }
-
-    return value;
   }
 }

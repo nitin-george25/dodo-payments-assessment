@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartComponent } from './chart.component';
 
 describe('ChartComponent', () => {
@@ -8,9 +8,8 @@ describe('ChartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChartComponent]
-    })
-    .compileComponents();
+      imports: [ChartComponent, BrowserAnimationsModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ChartComponent);
     component = fixture.componentInstance;

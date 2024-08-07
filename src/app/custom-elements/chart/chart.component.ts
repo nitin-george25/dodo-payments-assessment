@@ -40,7 +40,5 @@ export class ChartComponent {
       this.type,
       this.mapping
     );
-
-    console.log('chartData', this.chartData);
   }
 }

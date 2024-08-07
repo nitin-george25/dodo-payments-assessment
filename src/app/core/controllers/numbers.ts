@@ -22,11 +22,11 @@ export class Numbers {
   formatCurrency(value: number, currency: string): string {
     if (value >= 1000000) {
       return `${this.getCurrencySymbol(currency)} ${(value / 1000000).toFixed(
-        0
+        2
       )}M`;
     } else if (value >= 1000) {
       return `${this.getCurrencySymbol(currency)} ${(value / 1000).toFixed(
-        0
+        2
       )}K`;
     } else {
       return value.toLocaleString('en-US', {
